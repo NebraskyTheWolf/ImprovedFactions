@@ -23,6 +23,12 @@
 
 </div>
 
+## Be aware
+### This plugin use a private implementation for RunarMC
+### You will need to do some work around to make it work back
+### RunarMC API is a private source and won't be published
+### Please do not make issues, use the original plugin instead
+
 ## About
 
 Improved factions is a lightweight and performant minecraft faction plugin. It supports features downloadable from
