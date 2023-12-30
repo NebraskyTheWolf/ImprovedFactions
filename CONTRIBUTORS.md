@@ -12,6 +12,7 @@ A big thanks goes out to everyone who helps me answer questions on discord
 > Developers who have contributed to the source code
 
 * [Tobero](https://github.com/ToberoCat): The lead dev of this project
+* [Vakea](https://github.com/NebraskyTheWolf): Contributor of the project
 
 ### Early supporters
 

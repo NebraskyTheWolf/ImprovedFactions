@@ -26,8 +26,7 @@ import io.github.toberocat.improvedfactions.factions.Factions
 import io.github.toberocat.improvedfactions.functions.FactionPermissionFunction
 import io.github.toberocat.improvedfactions.invites.FactionInvites
 import io.github.toberocat.improvedfactions.listeners.move.MoveListener
-import io.github.toberocat.improvedfactions.listeners.move.TerritoryTitle
-import io.github.toberocat.improvedfactions.modules.base.BaseModule
+import io.github.toberocat.improvedfactions.modules.dynmap.DynMapModule
 import io.github.toberocat.improvedfactions.modules.power.PowerRaidsModule
 import io.github.toberocat.improvedfactions.papi.PapiExpansion
 import io.github.toberocat.improvedfactions.ranks.FactionRankHandler
@@ -38,6 +37,7 @@ import io.github.toberocat.improvedfactions.utils.BStatsCollector
 import io.github.toberocat.improvedfactions.utils.threadPool
 import io.github.toberocat.toberocore.command.CommandExecutor
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 
@@ -46,8 +46,6 @@ import org.jetbrains.exposed.sql.Database
  * Created: 04.08.2023
  * @author Tobias Madlberger (Tobias)
  */
-val objectMapper = ObjectMapper().registerKotlinModule()
-const val SPIGOT_RESOURCE_ID = 95617
 
 class ImprovedFactionsPlugin : JavaPlugin() {
 
@@ -59,8 +57,9 @@ class ImprovedFactionsPlugin : JavaPlugin() {
     companion object {
         lateinit var instance: ImprovedFactionsPlugin
             private set
-        val modules = mutableMapOf<String, BaseModule>(
-            PowerRaidsModule.powerRaidsPair()
+        val modules = mutableMapOf(
+            PowerRaidsModule.powerRaidsPair(),
+            DynMapModule.dynmapPair()
         )
     }
 
@@ -71,11 +70,15 @@ class ImprovedFactionsPlugin : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+
+        if (Bukkit.getPluginManager().getPlugin("RunarMetricStats") != null) {
+            logger.info("Loading with RunarMC API.")
+        }
+
         adventure = BukkitAudiences.create(this)
         claimChunkClusters = ClaimClusterDetector(DatabaseClaimQueryProvider())
 
         BStatsCollector(this)
-        checkForUpdate()
 
         copyFolders()
         loadConfig()
@@ -100,27 +103,6 @@ class ImprovedFactionsPlugin : JavaPlugin() {
     override fun onDisable() {
         adventure.close()
         threadPool.shutdown()
-    }
-
-    private fun checkForUpdate() {
-        if (!config.getBoolean("update-checker")) return
-
-        UpdateChecker(this, UpdateCheckSource.SPIGOT, SPIGOT_RESOURCE_ID.toString())
-            .setDownloadLink(SPIGOT_RESOURCE_ID)
-            .setDonationLink("https://www.paypal.com/donate/?hosted_button_id=BGB6QWR886Q6Y")
-            .setChangelogLink(SPIGOT_RESOURCE_ID)
-            .setNotifyOpsOnJoin(true)
-            .setColoredConsoleOutput(true)
-            .setSupportLink("https://discord.com/invite/yJYyNRfk39")
-            .setNotifyByPermissionOnJoin("factions.updatechecker")
-            .setUserAgent(
-                UserAgentBuilder()
-                    .addServerVersion()
-                    .addBukkitVersion()
-                    .addPluginNameAndVersion()
-            )
-            .checkEveryXHours(24.0)
-            .checkNow()
     }
 
     private fun copyFolders() {

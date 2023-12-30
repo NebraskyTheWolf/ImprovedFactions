@@ -37,6 +37,12 @@ object FactionHandler {
         }
     }
 
+    fun getAllFaction(): SizedIterable<Faction> {
+        return transaction {
+            return@transaction Faction.all()
+        }
+    }
+
     fun searchFactions(name: String): SizedIterable<Faction> {
         return transaction { return@transaction Faction.find { Factions.name like name } }
     }

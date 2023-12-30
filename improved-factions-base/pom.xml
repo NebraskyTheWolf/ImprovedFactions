@@ -57,12 +57,21 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
+            <id>runarmc</id>
+            <url>https://maven.runarmc.net/public/</url>
+        </repository>
+        <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
+        </repository>
+
+        <repository>
+            <id>dynmap</id>
+            <url>https://repo.mikeprimm.com/</url>
         </repository>
     </repositories>
 
@@ -290,6 +299,19 @@
             <artifactId>placeholderapi</artifactId>
             <version>${placeholderapi.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.runarmc</groupId>
+            <artifactId>mcapi</artifactId>
+            <version>1.0.5</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>us.dynmap</groupId>
+            <artifactId>dynmap-api</artifactId>
+            <version>3.5</version>
         </dependency>
     </dependencies>
 </project>

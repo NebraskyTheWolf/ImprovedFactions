@@ -14,7 +14,7 @@ object Permissions {
     val MANAGE_BANS = "manage-bans".registerAsPermission(Material.NETHERITE_AXE)
     val TRANSFER_OWNERSHIP = "transfer-ownership".registerAsPermission(Material.BARRIER)
 
-    fun String.registerAsPermission(material: Material): String {
+    private fun String.registerAsPermission(material: Material): String {
         knownPermissions[this] = PermissionHolder(material)
         return this
     }

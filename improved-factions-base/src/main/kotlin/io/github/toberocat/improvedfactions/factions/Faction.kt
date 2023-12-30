@@ -222,7 +222,7 @@ class Faction(id: EntityID<Int>) : IntEntity(id) {
 
     fun bans(): SizedIterable<FactionBan> = FactionBan.find { FactionBans.faction eq id }
 
-    fun isBanned(user: FactionUser): Boolean =
+    private fun isBanned(user: FactionUser): Boolean =
         FactionBan.count(FactionBans.user eq user.id and (FactionBans.faction eq id)) != 0L
 
     @Throws(FactionDoesntHaveThisClaimException::class)

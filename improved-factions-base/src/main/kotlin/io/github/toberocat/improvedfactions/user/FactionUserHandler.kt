@@ -1,5 +1,7 @@
 package io.github.toberocat.improvedfactions.user
 
+import net.runarmc.runarmetricstats.api.RunarMCAPI
+import net.runarmc.runarmetricstats.api.permissions.IPermissionsEntity
 import org.bukkit.OfflinePlayer
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
@@ -11,6 +13,8 @@ import java.util.*
 const val noFactionId = -1
 
 fun OfflinePlayer.factionUser(): FactionUser = uniqueId.factionUser()
+
+fun OfflinePlayer.permissionsUser(): IPermissionsEntity = RunarMCAPI.get().permissionManager.getPlayer(uniqueId)
 
 fun UUID.factionUser(): FactionUser {
     val id = this

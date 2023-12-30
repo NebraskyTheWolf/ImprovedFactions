@@ -4,7 +4,7 @@
 - [ ] Faction map rotation fix
 - [ ] Faction map show zones
 - [ ] Dynmap Extension
-- [ ] Home extension
+- [X] Home extension
 - [ ] Warp extension
 - [ ] Faction chest extension
 - [ ] Faction power change display using boss bars
